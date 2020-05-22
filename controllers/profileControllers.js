@@ -101,12 +101,13 @@ exports.getProfileByUserId = async (req, res) => {
       user: req.params.user_id,
     }).populate("user", ["name", "avatar"]);
     if (!profile) {
-      res
+      return res
         .status(400)
         .json({ message: "There is no profile with that user id" });
     }
     res.json(profile);
   } catch (error) {
+    console.log(error);
     if (error.name === "CastError")
       return res
         .status(400)
@@ -115,11 +116,27 @@ exports.getProfileByUserId = async (req, res) => {
   }
 };
 
+const deleteAllCommentsFromDeletedAccount = async (userId) => {
+  await Post.updateMany(
+    { comments: { $elemMatch: { user: userId } } },
+    { $pull: { comments: { user: userId } } }
+  );
+};
+
+const deleteAllLikesFromDeletedAccount = async (userId) => {
+  await Post.updateMany(
+    { likes: { $elemMatch: { user: userId } } },
+    { $pull: { likes: { user: userId } } }
+  );
+};
+
 exports.deleteProfile = async (req, res) => {
   try {
     await Post.deleteMany({ user: req.user.id });
     await Profile.findOneAndRemove({ user: req.user.id });
     await User.findOneAndRemove({ _id: req.user.id });
+    await deleteAllCommentsFromDeletedAccount(req.user.id);
+    await deleteAllLikesFromDeletedAccount(req.user.id);
     res.json({ message: "User deleted" });
   } catch (error) {
     console.log(error);

@@ -181,5 +181,8 @@ exports.deleteComment = async (req, res) => {
     await post.save();
 
     res.json(post.comments);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Server Error");
+  }
 };
