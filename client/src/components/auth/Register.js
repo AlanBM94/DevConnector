@@ -2,10 +2,18 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { setAlert } from "./../../actions/alert";
-import { register } from "./../../actions/auth";
+import { register, authGoogle, authFacebook } from "./../../actions/auth";
 import PropTypes from "prop-types";
+import FacebookLogin from "react-facebook-login";
+import GoogleLogin from "react-google-login";
 
-const Register = ({ setAlert, register, isAuthenticated }) => {
+const Register = ({
+  setAlert,
+  register,
+  isAuthenticated,
+  authGoogle,
+  authFacebook,
+}) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,6 +33,14 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     } else {
       register({ name, email, password });
     }
+  };
+
+  const responseGoogle = (res) => {
+    authGoogle(res.accessToken);
+  };
+
+  const responseFacebook = (res) => {
+    authFacebook(res.accessToken);
   };
 
   if (isAuthenticated) {
@@ -84,7 +100,32 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             // required
           />
         </div>
-        <input type="submit" className="btn btn-primary" value="Register" />
+        <div className="buttonsContainer">
+          <input type="submit" className="btn btn-primary" value="Register" />
+          <FacebookLogin
+            appId="538214960388156"
+            autoLoad={false}
+            textButton="Facebook"
+            fields="name,email,picture"
+            callback={responseFacebook}
+            cssClass="btn btn-facebook"
+          />
+          <GoogleLogin
+            clientId="811142648388-pshno9ob3gf5srjel11lrsm6tdkgc9cr.apps.googleusercontent.com"
+            render={(renderProps) => (
+              <button
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                className="btn btn-google"
+              >
+                Google
+              </button>
+            )}
+            buttonText="Google"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+          />
+        </div>
       </form>
       <p className="my-1">
         Already have an account? <Link to="/login">Sign In</Link>
@@ -97,10 +138,17 @@ Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  authGoogle: PropTypes.func.isRequired,
+  authFacebook: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { setAlert, register })(Register);
+export default connect(mapStateToProps, {
+  setAlert,
+  register,
+  authGoogle,
+  authFacebook,
+})(Register);

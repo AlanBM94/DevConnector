@@ -17,7 +17,7 @@ body {
   font-family: "Raleway", sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-  background-color: #fff;
+  background-color: #ffff;
   color: #333;
 }
 
@@ -188,6 +188,12 @@ img {
   color: #fff;
 }
 
+.btn-danger-outline {
+  color: var(--danger-color);
+  border: 1px solid var(--danger-color);
+  background: #fff;
+}
+
 .btn-success,
 .bg-success,
 .badge-success,
@@ -300,6 +306,23 @@ button {
 
 .table th {
   background: var(--light-color);
+}
+
+.buttonsContainer {
+  width: 22rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-facebook {
+  background: #3b5998;
+  color: white;
+}
+
+.btn-google {
+  background: #db4437;
+  color: white;
 }
 
 /* Navbar */

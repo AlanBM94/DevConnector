@@ -61,3 +61,39 @@ exports.signIn = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
+
+exports.googleAuth = async (req, res, next) => {
+  const payload = {
+    user: { id: req.user.id },
+  };
+
+  return jwt.sign(
+    payload,
+    config.get("jwtSecret"),
+    { expiresIn: 360000 },
+    (err, token) => {
+      if (err) {
+        throw err;
+      }
+      res.json({ token });
+    }
+  );
+};
+
+exports.facebookAuth = async (req, res, next) => {
+  const payload = {
+    user: { id: req.user.id },
+  };
+
+  return jwt.sign(
+    payload,
+    config.get("jwtSecret"),
+    { expiresIn: 360000 },
+    (err, token) => {
+      if (err) {
+        throw err;
+      }
+      res.json({ token });
+    }
+  );
+};

@@ -85,6 +85,10 @@ exports.addLike = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
+    post.dislikes = post.dislikes.filter(
+      (dislike) => dislike.user.toString() !== req.user.id
+    );
+
     const postIsAlreadyLikedByCurrentUser =
       post.likes.filter((like) => like.user.toString() === req.user.id).length >
       0;
@@ -104,27 +108,27 @@ exports.addLike = async (req, res) => {
   }
 };
 
-exports.removeLike = async (req, res) => {
+exports.addDislike = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
-    const postHasNotBeenLiked =
-      post.likes.filter((like) => like.user.toString() === req.user.id)
-        .length === 0;
+    post.likes = post.likes.filter(
+      (like) => like.user.toString() !== req.user.id
+    );
 
-    if (postHasNotBeenLiked) {
-      return res.status(400).json({ message: "Post has not been liked" });
+    const postIsAlreadyDislikedByCurrentUser =
+      post.dislikes.filter((dislike) => dislike.user.toString() === req.user.id)
+        .length > 0;
+
+    if (postIsAlreadyDislikedByCurrentUser) {
+      return res.status(400).json({ msg: "Post already disliked" });
     }
 
-    const removedIndex = post.likes
-      .map((like) => like.user.toString())
-      .indexOf(req.user.id);
-
-    post.likes.splice(removedIndex, 1);
+    post.dislikes.unshift({ user: req.user.id });
 
     await post.save();
 
-    res.json(post.likes);
+    res.json(post.dislikes);
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Server Error");

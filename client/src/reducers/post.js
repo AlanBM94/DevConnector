@@ -2,11 +2,12 @@ import {
   GET_POSTS,
   GET_POST,
   POST_ERROR,
-  UPDATE_LIKES,
   DELETE_POST,
   ADD_POST,
   ADD_COMMENT,
   REMOVE_COMMENT,
+  ADD_LIKE,
+  ADD_DISLIKE,
 } from "./../actions/types";
 
 const initialState = {
@@ -50,13 +51,43 @@ export default function (state = initialState, action) {
         error: payload,
         loading: false,
       };
-    case UPDATE_LIKES:
+    case ADD_LIKE:
       return {
         ...state,
-        posts: state.posts.map((post) =>
-          post._id === payload.postId ? { ...post, likes: payload.likes } : post
-        ),
-        loading: false,
+        posts: state.posts.map((post) => {
+          if (post._id === payload.postId) {
+            return {
+              ...post,
+              likes: payload.likes,
+              dislikes:
+                post.dislikes.length > 0
+                  ? post.dislikes.filter(
+                      (dislike) => dislike.user !== payload.userId
+                    )
+                  : [],
+            };
+          } else {
+            return post;
+          }
+        }),
+      };
+    case ADD_DISLIKE:
+      return {
+        ...state,
+        posts: state.posts.map((post) => {
+          if (post._id === payload.postId) {
+            return {
+              ...post,
+              dislikes: payload.dislikes,
+              likes:
+                post.likes.length > 0
+                  ? post.likes.filter((like) => like.user !== payload.userId)
+                  : [],
+            };
+          } else {
+            return post;
+          }
+        }),
       };
     case ADD_COMMENT:
       return {

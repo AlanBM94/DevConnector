@@ -4,11 +4,12 @@ import {
   GET_POSTS,
   GET_POST,
   POST_ERROR,
-  UPDATE_LIKES,
   ADD_POST,
   DELETE_POST,
   ADD_COMMENT,
   REMOVE_COMMENT,
+  ADD_LIKE,
+  ADD_DISLIKE,
 } from "./types";
 
 export const getPosts = () => async (dispatch) => {
@@ -41,10 +42,10 @@ export const getPost = (id) => async (dispatch) => {
   }
 };
 
-export const addLike = (postId) => async (dispatch) => {
+export const addLike = (postId, userId) => async (dispatch) => {
   try {
     const res = await axios.put(`/api/posts/like/${postId}`);
-    dispatch({ type: UPDATE_LIKES, payload: { postId, likes: res.data } });
+    dispatch({ type: ADD_LIKE, payload: { postId, likes: res.data, userId } });
   } catch (error) {
     dispatch({
       type: POST_ERROR,
@@ -56,10 +57,13 @@ export const addLike = (postId) => async (dispatch) => {
   }
 };
 
-export const removeLike = (postId) => async (dispatch) => {
+export const addDislike = (postId, userId) => async (dispatch) => {
   try {
-    const res = await axios.put(`/api/posts/unlike/${postId}`);
-    dispatch({ type: UPDATE_LIKES, payload: { postId, likes: res.data } });
+    const res = await axios.put(`/api/posts/dislike/${postId}`);
+    dispatch({
+      type: ADD_DISLIKE,
+      payload: { postId, dislikes: res.data, userId },
+    });
   } catch (error) {
     dispatch({
       type: POST_ERROR,

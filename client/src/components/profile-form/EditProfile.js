@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
+import AllCountries from "./AllCountries";
 import { connect } from "react-redux";
 import { createProfile, getCurrentProfile } from "./../../actions/profile";
 
@@ -125,16 +126,15 @@ const EditProfile = ({
           </small>
         </div>
         <div className="form-group">
-          <input
-            type="text"
+          <select
             placeholder="Location"
             value={location}
             onChange={(e) => onChangeHandler(e)}
             name="location"
-          />
-          <small className="form-text">
-            City & state suggested (eg. Boston, MA)
-          </small>
+          >
+            <AllCountries />
+          </select>
+          <small className="form-text">Country</small>
         </div>
         <div className="form-group">
           <input
@@ -241,7 +241,7 @@ const EditProfile = ({
           </>
         )}
 
-        <input type="submit" className="btn btn-primary my-1" />
+        <input type="submit" className="btn btn-primary my-1" value="Send" />
         <Link className="btn btn-light my-1" to="/dashboard">
           Go Back
         </Link>

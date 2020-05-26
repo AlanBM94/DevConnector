@@ -16,8 +16,10 @@ export const loadUser = () => async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
+
   try {
     const res = await axios.get("/api/auth");
+
     dispatch({
       type: USER_LOADED,
       payload: res.data,
@@ -74,6 +76,48 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+export const authGoogle = (data) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await axios.post(
+      "/api/auth/google",
+      {
+        access_token: data,
+      },
+      config
+    );
+    dispatch({ type: REGISTER_SUCCESS, payload: { token: res.data.token } });
+    dispatch(loadUser());
+  } catch (error) {
+    dispatch({ type: REGISTER_FAIL });
+  }
+};
+
+export const authFacebook = (data) => async (dispatch) => {
+  console.log("data", data);
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await axios.post(
+      "/api/auth/facebook",
+      {
+        access_token: data,
+      },
+      config
+    );
+    dispatch({ type: REGISTER_SUCCESS, payload: { token: res.data.token } });
+    dispatch(loadUser());
+  } catch (error) {
+    dispatch({ type: REGISTER_FAIL });
+  }
+};
 export const logout = () => (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOGOUT });

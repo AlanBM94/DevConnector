@@ -113,7 +113,7 @@ const AddExperience = ({ addExperience, history }) => {
             placeholder="Job Description"
           ></textarea>
         </div>
-        <input type="submit" className="btn btn-primary my-1" />
+        <input type="submit" className="btn btn-primary my-1" value="Send" />
         <Link className="btn btn-light my-1" to="/dashboard">
           Go Back
         </Link>

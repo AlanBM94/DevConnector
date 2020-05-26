@@ -16,6 +16,7 @@ module.exports = {
   createProfileValidations: [
     check("status", "Status is required").not().isEmpty(),
     check("skills", "Skills are required").not().isEmpty(),
+    check("website", "Website must be a valid url").isURL(),
   ],
   addExperienceValidations: [
     check("title", "Title is required").not().isEmpty(),

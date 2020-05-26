@@ -5,6 +5,11 @@ import PropTypes from "prop-types";
 import { logout } from "./../../actions/auth";
 
 const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
+  const onClickHandler = () => {
+    logout();
+    window.location = "/";
+  };
+
   const authLinks = (
     <ul>
       <li>
@@ -20,7 +25,7 @@ const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
         </Link>
       </li>
       <li>
-        <a onClick={logout} href="#!">
+        <a onClick={() => onClickHandler()} href="#!">
           <i className="fas fa-sign-out-alt"></i>{" "}
           <span className="hide-sm">Logout</span>
         </a>
