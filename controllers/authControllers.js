@@ -16,6 +16,7 @@ exports.getUser = async (req, res) => {
 
 exports.signIn = async (req, res) => {
   const errors = validationResult(req);
+
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
@@ -31,9 +32,10 @@ exports.signIn = async (req, res) => {
         .json({ errors: [{ message: "Invalid credentials" }] });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatched = await bcrypt.compare(password, user.password);
 
-    if (!isMatch) {
+    if (!isMatched) {
+      console.log("passwords do not are the same");
       return res
         .status(400)
         .json({ errors: [{ message: "Invalid credentials" }] });
