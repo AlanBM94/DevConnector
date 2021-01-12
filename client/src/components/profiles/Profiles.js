@@ -6,43 +6,50 @@ import ProfileItem from "./ProfileItem";
 import { getProfiles } from "./../../actions/profile";
 
 const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
-  useEffect(() => {
-    getProfiles();
-  }, [getProfiles]);
+    useEffect(() => {
+        getProfiles();
+    }, [getProfiles]);
 
-  return (
-    <>
-      {loading ? (
-        <Spinner />
-      ) : (
+    return (
         <>
-          <h1 className="large tex-primary">Developers</h1>
-          <p className="lead">
-            <i className="fab fa-connectdevelop"></i>Browse and connect with
-            developers
-          </p>
-          <div className="profiles">
-            {profiles.length > 0 ? (
-              profiles.map((profile) => (
-                <ProfileItem key={profile._id} profile={profile} />
-              ))
+            {loading ? (
+                <Spinner />
             ) : (
-              <h4>No profiles found...</h4>
+                <>
+                    {/* <h1 className="large tex-primary">Developers</h1> */}
+                    <h1 className="large tex-primary">Desarrolladores</h1>
+                    <p className="lead">
+                        {/* <i className="fab fa-connectdevelop"></i>Browse and connect with
+            developers */}
+                        <i className="fab fa-connectdevelop"></i>Navega y
+                        conecta con desarrolladores
+                    </p>
+                    <div className="profiles">
+                        {profiles.length > 0 ? (
+                            profiles.map((profile) => (
+                                <ProfileItem
+                                    key={profile._id}
+                                    profile={profile}
+                                />
+                            ))
+                        ) : (
+                            // <h4>No profiles found...</h4>
+                            <h4>No se encontraron perfiles...</h4>
+                        )}
+                    </div>
+                </>
             )}
-          </div>
         </>
-      )}
-    </>
-  );
+    );
 };
 
 Profiles.propTypes = {
-  getProfiles: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
+    getProfiles: PropTypes.func.isRequired,
+    profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  profile: state.profile,
+    profile: state.profile,
 });
 
 export default connect(mapStateToProps, { getProfiles })(Profiles);

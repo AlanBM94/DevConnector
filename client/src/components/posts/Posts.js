@@ -7,35 +7,37 @@ import PostForm from "./PostForm";
 import { getPosts } from "./../../actions/post";
 
 const Posts = ({ getPosts, post: { posts, loading } }) => {
-  useEffect(() => {
-    getPosts();
-  }, [getPosts]);
+    useEffect(() => {
+        getPosts();
+    }, [getPosts]);
 
-  return loading ? (
-    <Spinner />
-  ) : (
-    <>
-      <h1 className="large text-primary">Posts</h1>
-      <p className="lead">
-        <i className="fas fa-user"></i>Welcome to the comunnity
-      </p>
-      <PostForm />
-      <div className="posts">
-        {posts.map((post) => (
-          <PostItem key={post._id} post={post} />
-        ))}
-      </div>
-    </>
-  );
+    return loading ? (
+        <Spinner />
+    ) : (
+        <>
+            {/* <h1 className="large text-primary">Posts</h1> */}
+            <h1 className="large text-primary">Publicaciones</h1>
+            <p className="lead">
+                {/* <i className="fas fa-user"></i>Welcome to the comunnity */}
+                <i className="fas fa-user"></i>Bienvenido a la comunidad
+            </p>
+            <PostForm />
+            <div className="posts">
+                {posts.map((post) => (
+                    <PostItem key={post._id} post={post} />
+                ))}
+            </div>
+        </>
+    );
 };
 
 Posts.propTypes = {
-  getPosts: PropTypes.func.isRequired,
-  post: PropTypes.object.isRequired,
+    getPosts: PropTypes.func.isRequired,
+    post: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  post: state.post,
+    post: state.post,
 });
 
 export default connect(mapStateToProps, { getPosts })(Posts);

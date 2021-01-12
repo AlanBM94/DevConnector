@@ -36,15 +36,19 @@ const Login = ({ login, isAuthenticated, authFacebook, authGoogle }) => {
 
     return (
         <>
-            <h1 className="large text-primary">Sign In</h1>
+            {/* <h1 className="large text-primary">Sign In</h1> */}
+            <h1 className="large text-primary">Iniciar sesión</h1>
             <p className="lead">
-                <i className="fas fa-user"></i> Sign Into Your Account
+                {/* <i className="fas fa-user"></i> Sign Into Your Account */}
+                <i className="fas fa-user"></i> Inicia sesión con tu correo
+                electrónico
             </p>
             <form className="form" onSubmit={onSubmitHandler}>
                 <div className="form-group">
                     <input
                         type="email"
-                        placeholder="Email Address"
+                        // placeholder="Email Address"
+                        placeholder="Correo electrónico"
                         name="email"
                         value={email}
                         onChange={(e) => onChangeHandler(e)}
@@ -54,7 +58,8 @@ const Login = ({ login, isAuthenticated, authFacebook, authGoogle }) => {
                 <div className="form-group">
                     <input
                         type="password"
-                        placeholder="Password"
+                        // placeholder="Password"
+                        placeholder="Contraseña"
                         name="password"
                         minLength="6"
                         value={password}
@@ -67,7 +72,8 @@ const Login = ({ login, isAuthenticated, authFacebook, authGoogle }) => {
                     <input
                         type="submit"
                         className="btn btn-primary"
-                        value="Login"
+                        // value="Login"
+                        value="Iniciar sesión"
                     />
                     {/* <FacebookLogin
             appId="538214960388156"
@@ -95,7 +101,8 @@ const Login = ({ login, isAuthenticated, authFacebook, authGoogle }) => {
                 </div>
             </form>
             <p className="my-1">
-                Don't have an account? <Link to="/register">Sign Up</Link>
+                {/* Don't have an account? <Link to="/register">Sign Up</Link> */}
+                Aún no tienes cuenta? <Link to="/register">Registrarse</Link>
             </p>
         </>
     );

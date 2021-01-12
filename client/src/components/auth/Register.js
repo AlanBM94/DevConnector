@@ -49,9 +49,11 @@ const Register = ({
 
     return (
         <>
-            <h1 className="large text-primary">Sign Up</h1>
+            {/* <h1 className="large text-primary">Sign Up</h1> */}
+            <h1 className="large text-primary">Registrarse</h1>
             <p className="lead">
-                <i className="fas fa-user"></i> Create Your Account
+                {/* <i className="fas fa-user"></i> Create Your Account */}
+                <i className="fas fa-user"></i> Crea tu cuenta
             </p>
             <form className="form" onSubmit={onSubmitHandler}>
                 <div className="form-group">
@@ -59,7 +61,8 @@ const Register = ({
                         type="text"
                         value={name}
                         onChange={(e) => onChangeHandler(e)}
-                        placeholder="Name"
+                        // placeholder="Name"
+                        placeholder="Nombre"
                         name="name"
                         // required
                     />
@@ -67,21 +70,26 @@ const Register = ({
                 <div className="form-group">
                     <input
                         type="email"
-                        placeholder="Email Address"
+                        // placeholder="Email Address"
+                        placeholder="Correo electrónico"
                         name="email"
                         value={email}
                         onChange={(e) => onChangeHandler(e)}
                         // required
                     />
                     <small className="form-text">
-                        This site uses Gravatar so if you want a profile image,
-                        use a Gravatar email
+                        {/* This site uses Gravatar so if you want a profile image,
+                        use a Gravatar email */}
+                        Este sitio utiliza Gravatar, así que si quieres una
+                        imagen de perfil utiliza un email asociado a tu cuenta
+                        de Gravatar o inicia sesión con tu cuenta de Google
                     </small>
                 </div>
                 <div className="form-group">
                     <input
                         type="password"
-                        placeholder="Password"
+                        // placeholder="Password"
+                        placeholder="Contraseña"
                         name="password"
                         // minLength="6"
                         value={password}
@@ -92,7 +100,8 @@ const Register = ({
                 <div className="form-group">
                     <input
                         type="password"
-                        placeholder="Confirm Password"
+                        // placeholder="Confirm Password"
+                        placeholder="Confirmar contraseña"
                         name="password2"
                         // minLength="6"
                         value={password2}
@@ -104,7 +113,7 @@ const Register = ({
                     <input
                         type="submit"
                         className="btn btn-primary"
-                        value="Register"
+                        value="Registrarse"
                     />
                     {/* <FacebookLogin
             appId="538214960388156"
@@ -132,7 +141,8 @@ const Register = ({
                 </div>
             </form>
             <p className="my-1">
-                Already have an account? <Link to="/login">Sign In</Link>
+                {/* Already have an account? <Link to="/login">Sign In</Link> */}
+                Ya tienes una cuenta? <Link to="/login">Iniciar sesión</Link>
             </p>
         </>
     );
