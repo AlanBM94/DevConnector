@@ -29,7 +29,8 @@ const Register = ({
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         if (password !== password2) {
-            setAlert("Password are not the same", "danger");
+            // setAlert("Password are not the same", "danger");
+            setAlert("Las contraseñas no son iguales", "danger");
         } else {
             register({ name, email, password });
         }
